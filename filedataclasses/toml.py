@@ -3,11 +3,11 @@ from .file import FileDataclass
 try:
     from toml import loads, dumps
 
-except ImportError as error:
+except ImportError:
     raise ImportError(
         "Missing required modules. "
         "To support TOML, install with the [toml] extras."
-    ) from error
+    ) from None
 
 
 class TomlDataclass(FileDataclass):
