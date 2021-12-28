@@ -26,7 +26,9 @@ class FileDataclass(ABC):
         except (FileNotFoundError, OSError):
             # We load the default values if a file can't be opened,
             # or if it doesn't exist.
-            # TODO: think about a way of warning the user about a OSError
+            # TODO: think about a way of warning the user about a OSError.
+            # maybe it can be done using builtin warnings module, although I
+            # wouldn't want it to print the warning (at least not by default)
             pass
 
         for field, value in self._loads(raw).items():
@@ -50,6 +52,9 @@ class FileDataclass(ABC):
 
     @abstractmethod
     def _loads(self, data: str) -> dict:
+        # TODO: handle events in which the parse fails to parse the data
+        # Similarly to the previues comment, it possibly can be done by catching
+        # the raised exceptions here and converting them into warnings.
         pass
 
     @abstractmethod
