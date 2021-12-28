@@ -31,9 +31,11 @@ class FileDataclass(ABC):
             # wouldn't want it to print the warning (at least not by default)
             pass
 
-        for field, value in self._loads(raw).items():
-            if field in self._fields():
-                self.__setattr__(field, value)
+        data = self._loads(raw)
+        if data:
+            for field, value in data.items():
+                if field in self._fields():
+                    self.__setattr__(field, value)
 
     @classmethod
     def _fields(cls) -> List[str]:
@@ -59,4 +61,6 @@ class FileDataclass(ABC):
 
     @abstractmethod
     def _dumps(self, data: dict) -> str:
+        # TODO: don't erase existing data that isn't part of the dataclass
+        # in the file.
         pass
